@@ -1,32 +1,17 @@
 import React, { useState } from "react";
 import { useAppContext } from "../store/store";
-import { Link } from "react-router-dom";
 import NavbarComponent from "../components/Navbar";
 
 const CreateComponent = () => {
 	const [product, setProduct] = useState({
 		article: "",
 		price: "",
-		image: null,
+		image: "",
 		description: ""
 	});
 
 	const store = useAppContext();
 
-
-	 /**  function handleOnChangeFile(e) {
-			const element = e.target;
-			const file = element.files[0];
-			const reader = new FileReader();
-
-			reader.readAsDataURL(file);
-
-			reader.onloadend = function () {
-					setImage(reader.result.toString());
-			}
-			
-
-	}*/
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -34,12 +19,24 @@ const CreateComponent = () => {
 			id: crypto.randomUUID(),
 			...product
 		};
-		alert('Producto Ingresado')
-
 		//TODO mandar a registrar
-		store.createItem(newProduct);
+		const a = JSON.parse(localStorage.getItem('products')) || [];
+		a.push(newProduct);
+		localStorage.setItem('products', JSON.stringify(a));
+		
 	}
 
+	
+	function handleOnChangeFile(e) {
+		const element = e.target;
+		var file = element.files[0];
+		var reader = new FileReader();
+		reader.onloadend = function () {
+			console.log("RESULT", reader.result);
+			setProduct({...product, image:reader.result.toString()});
+		};
+		reader.readAsDataURL(file);
+	}
 	const handleInputChange = (e) => {
 		// eslint-disable-next-line no-undef
 		e.preventDefault();
@@ -54,49 +51,45 @@ const CreateComponent = () => {
 
 			<form onSubmit={handleSubmit}>
 				<div className="col-md-3 form-container">
-				<div className="mb-3">
-					<label className="form-label">Nombre</label>
-					<input className="form-control"
-						type="text"
-						name="article"
-						onChange={handleInputChange}
-						value={product.article}>
-					</input>
+					<div className="mb-3">
+						<label className="form-label">Nombre</label>
+						<input className="form-control"
+							type="text"
+							name="article"
+							onChange={handleInputChange}
+							value={product.article}>
+						</input>
+					</div>
+					<div>
+						<label className="form-label">Precio</label>
+						<input className="form-control"
+							type="text"
+							name="price"
+							onChange={handleInputChange}
+							value={product.price}>
+						</input>
+					</div>
+					<div>
+						<label className="form-label">Imagen</label>
+						<input type="file" name="imagen" onChange={handleOnChangeFile} />
+						<div>{!!product.image ? <img src={product.image} width="200" /> : ""}</div>
+					</div>
+					<div>
+						<label className="form-label">Descripción</label>
+						<input className="form-control"
+							type="text"
+							name="description"
+							onChange={handleInputChange}
+							value={product.description}>
+						</input>
+					</div>
+					<br />
+					<br />
+					<button className="button" type="submit" >
+						Guardar
+					</button>
 				</div>
-				<div>
-				<label className="form-label">Precio</label>
-					<input className="form-control"
-						type="text"
-						name="price"
-						onChange={handleInputChange}
-						value={product.price}>
-					</input>
-				</div>
-				<div>
-					<label className="form-label">Imagen</label>
-					<input className="form-control"
-						type="text"
-						name="image"
-						
-						value={product.description}>
-					</input>
-				</div>
-				<div>
-					<label className="form-label">Descripción</label>
-					<input className="form-control"
-						type="text"
-						name="description"
-						onChange={handleInputChange}
-						value={product.description}>
-					</input>
-				</div>
-				<br/>
-				<br/>
-				<button className="button" type="submit" >
-					Guardar
-				</button>
-		</div>
-				
+
 			</form >
 		</div >
 	);

@@ -2,9 +2,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const AppContext = createContext({
   items: [],
-  createItem: (item) => {},
-  getItem: (id) => {},
-  updateItem: (item) => {},
+  createItem: (item) => { },
+  getItem: (id) => { },
+  updateItem: (item) => { },
 });
 
 export default function Store({ children }) {
@@ -13,12 +13,11 @@ export default function Store({ children }) {
   ]);
 
   function createItem(item) {
-    console.log(item);
     const temp = [...items];
-
     temp.unshift(item);
-
+    console.log(item);
     setItems([...temp]);
+
   }
 
   function getItem(id) {

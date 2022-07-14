@@ -1,9 +1,21 @@
 import React from "react";
-import Navbar from "./Navbar";
 
-const Product = () => {
+
+const Product = ({ item }) => {
   return (
-  <Navbar></Navbar>
+    <div className="">
+        <div className="card">
+          <figure>
+          <img src={item.image}  />
+          </figure>
+          <div className="contenido-card">
+            <h3>{item.article}</h3>
+            <p>{item.price}</p>
+            <p> {item.description}</p>
+          </div>
+        </div>
+      </div>
+  
   );
 
 }
