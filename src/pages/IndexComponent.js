@@ -19,7 +19,7 @@ const  IndexComponent = () => {
       <div className="title-cards">
         <h2>Productos</h2>
       </div>
-      <div className="container-card ">
+      <div className="container-card d-flex flex-wrap ">
 
         {products.map((item) => (
           <Product key={item.id} item={item} />

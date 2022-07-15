@@ -23,17 +23,17 @@ const CreateComponent = () => {
 		const a = JSON.parse(localStorage.getItem('products')) || [];
 		a.push(newProduct);
 		localStorage.setItem('products', JSON.stringify(a));
-		
+		document.location.href = "/"
 	}
 
-	
+
 	function handleOnChangeFile(e) {
 		const element = e.target;
 		var file = element.files[0];
 		var reader = new FileReader();
 		reader.onloadend = function () {
 			console.log("RESULT", reader.result);
-			setProduct({...product, image:reader.result.toString()});
+			setProduct({ ...product, image: reader.result.toString() });
 		};
 		reader.readAsDataURL(file);
 	}
@@ -50,46 +50,51 @@ const CreateComponent = () => {
 			<NavbarComponent />
 
 			<form onSubmit={handleSubmit}>
-				<div className="col-md-3 form-container">
-					<div className="mb-3">
-						<label className="form-label">Nombre</label>
-						<input className="form-control"
-							type="text"
-							name="article"
-							onChange={handleInputChange}
-							value={product.article}>
-						</input>
+				<div className="d-flex justify-content-center">
+					<div className="card">
+						<div className=" form-container">
+							<div className="mb-3">
+								<label className="form-label">Nombre</label>
+								<input className="form-control"
+									type="text"
+									name="article"
+									onChange={handleInputChange}
+									value={product.article}>
+								</input>
+							</div>
+							<div>
+								<label className="form-label">Precio</label>
+								<input className="form-control"
+									type="text"
+									name="price"
+									onChange={handleInputChange}
+									value={product.price}>
+								</input>
+							</div>
+							<div>
+								<label className="form-label">Imagen</label>
+								<input type="file" name="imagen" onChange={handleOnChangeFile} />
+								<div>{!!product.image ? <img src={product.image} width="200" /> : ""}</div>
+							</div>
+							<div>
+								<label className="form-label">Descripción</label>
+								<input className="form-control"
+									type="text"
+									name="description"
+									onChange={handleInputChange}
+									value={product.description}>
+								</input>
+							</div>
+							<br />
+							<br />
+							<div className="text-center">
+							<button className="button" type="submit" >
+								Guardar
+							</button>
+							</div>
+						</div>
 					</div>
-					<div>
-						<label className="form-label">Precio</label>
-						<input className="form-control"
-							type="text"
-							name="price"
-							onChange={handleInputChange}
-							value={product.price}>
-						</input>
-					</div>
-					<div>
-						<label className="form-label">Imagen</label>
-						<input type="file" name="imagen" onChange={handleOnChangeFile} />
-						<div>{!!product.image ? <img src={product.image} width="200" /> : ""}</div>
-					</div>
-					<div>
-						<label className="form-label">Descripción</label>
-						<input className="form-control"
-							type="text"
-							name="description"
-							onChange={handleInputChange}
-							value={product.description}>
-						</input>
-					</div>
-					<br />
-					<br />
-					<button className="button" type="submit" >
-						Guardar
-					</button>
 				</div>
-
 			</form >
 		</div >
 	);

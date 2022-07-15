@@ -3,9 +3,8 @@ import React from "react";
 
 const Product = ({ item }) => {
   return (
-    <div className="">
         <div className="card">
-          <figure>
+          <figure className="text-center">
           <img src={item.image}  />
           </figure>
           <div className="contenido-card">
@@ -14,8 +13,6 @@ const Product = ({ item }) => {
             <p> {item.description}</p>
           </div>
         </div>
-      </div>
-  
   );
 
 }
